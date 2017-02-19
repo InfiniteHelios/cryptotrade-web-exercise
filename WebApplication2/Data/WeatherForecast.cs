@@ -1,15 +1,1 @@
-using System;
-
-namespace WebApplication2.Data
-{
-  public class WeatherForecast
-  {
-    public DateTime Date { get; set; }
-
-    public int TemperatureC { get; set; }
-
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-
-    public string Summary { get; set; }
-  }
-}
+"Sun Feb 19 2017 14:03:00 GMT-0800 (Pacific Standard Time)" 
