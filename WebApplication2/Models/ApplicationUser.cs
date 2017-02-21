@@ -1,8 +1,1 @@
-using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
-
-public class ApplicationUser : IdentityUser
-{
-  [MaxLength(255)]
-  public string Name { get; set; }
-}
+"Tue Feb 21 2017 14:56:00 GMT-0800 (Pacific Standard Time)" 
