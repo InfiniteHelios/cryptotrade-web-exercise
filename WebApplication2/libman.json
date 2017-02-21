@@ -1,14 +1,1 @@
-{
-  "version": "1.0",
-  "defaultProvider": "unpkg",
-  "libraries": [
-    {
-      "library": "@microsoft/signalr@latest",
-      "destination": "wwwroot/js/signalr/",
-      "files": [
-        "dist/browser/signalr.js",
-        "dist/browser/signalr.min.js"
-      ]
-    }
-  ]
-}
+"Tue Feb 21 2017 08:36:00 GMT-0800 (Pacific Standard Time)" 
