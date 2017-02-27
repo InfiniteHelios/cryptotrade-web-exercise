@@ -1,17 +1,1 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace WebApplication2.Data
-{
-  public class UserSetting
-  {
-    public int Id { get; set; }
-
-    [MaxLength(255)]
-    public string Setting { get; set; }
-
-    [ForeignKey(nameof(ApplicationUser))]
-    public string UserId { get; set; }
-    public virtual ApplicationUser User { get; set; }
-  }
-}
+"Mon Feb 27 2017 09:50:00 GMT-0800 (Pacific Standard Time)" 
