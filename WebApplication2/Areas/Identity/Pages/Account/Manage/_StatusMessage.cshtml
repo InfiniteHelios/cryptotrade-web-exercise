@@ -1,1 +1,10 @@
-"Sat Mar 11 2017 06:01:00 GMT-0800 (Pacific Standard Time)" 
+﻿@model string
+
+@if (!String.IsNullOrEmpty(Model))
+{
+    var statusMessageClass = Model.StartsWith("Error") ? "danger" : "success";
+    <div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
+        <button type="button" class="close btn-close" data-dismiss="alert" aria-label="Close"></button>
+        @Model
+    </div>
+}

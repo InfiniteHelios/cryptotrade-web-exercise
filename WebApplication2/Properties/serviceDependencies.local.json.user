@@ -1,1 +1,9 @@
-"Mon Feb 27 2017 17:44:00 GMT-0800 (Pacific Standard Time)" 
+{
+  "dependencies": {
+    "mssql1": {
+      "restored": true,
+      "restoreTime": "2021-07-28T05:26:04.4149513Z"
+    }
+  },
+  "parameters": {}
+}
