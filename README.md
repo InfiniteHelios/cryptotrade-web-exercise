@@ -4,9 +4,14 @@ This is Cryptocurrency Website developed with Blazor
 ## Installation
 This requires dotnet.
 
-Make migraion files.
+Install dotnet-ef tool.
 ```sh
 cd WebApplication2
+dotnet tool install --global dotnet-ef
+```
+
+Make migraion files.
+```sh
 dotnet ef migrations add Init
 ```
 
