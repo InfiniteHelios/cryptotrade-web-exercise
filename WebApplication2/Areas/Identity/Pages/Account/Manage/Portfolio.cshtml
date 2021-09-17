@@ -1,0 +1,195 @@
+@page
+@model PortfolioModel
+@{
+  ViewData["Title"] = "Portfolio";
+  ViewData["ActivePage"] = ManageNavPages.Portfolio;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row">
+  <div class="col-md-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Cryptocoin</th>
+          <th>Amount</th>
+          <th>Exchange</th>
+          <th>Active</th>
+          <th>Created At</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @{
+          int i = 0;
+        }
+        @foreach (var item in Model.Portfolios)
+        {
+          <tr>
+            <td>@{
+                i++;
+              }@i</td>
+            <td>@item.Cryptocoin.Symbol</td>
+            <td>@item.Amount</td>
+            <td>@item.Exchange.Symbol</td>
+            <td>
+              <div class="form-check form-switch">
+                @if (item.Active == false)
+                {
+                  <input class="form-check-input" type="checkbox" id="switchActive" disabled="" />
+                }
+                else
+                {
+                  <input class="form-check-input" type="checkbox" id="switchActive" disabled="" checked="" />
+                }
+              </div>
+            </td>
+            <td>@item.CreatedAt</td>
+            <td>
+              <button class="btn btn-primary"
+              onclick="Edit(@item.Id, @item.CryptocoinId, @item.Amount, @item.ExchangeId, '@item.Active' == 'True')">
+                Edit
+              </button>
+              <button class="btn btn-danger" onclick="Delete(@item.Id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    <button class="btn btn-success" onclick="Add()">Add</button>
+  </div>
+</div>
+
+<!-- This is the popup to create or edit -->
+<div class="modal hide" tabindex="-1" role="dialog" id="edit-dlg">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title"></h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="ClosePopup()">
+          <span aria-hidden="true" data-nsfw-filter-status="swf"></span>
+        </button>
+      </div>
+      <form id="edit-form" method="post">
+        <input type="hidden" id="portfolio-id" name="portfolio-id" value="-1" />
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="cryptocoin" class="form-label mt-4">Select coin</label>
+            <select class="form-control" id="cryptocoin" name="cryptocoin">
+              @foreach (var option in Model.CryptocoinOptions)
+              {
+                <option value="@option.Id">
+                  @option.Symbol
+                </option>
+              }
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="amount" class="form-label mt-4">Amount</label>
+            <input class="form-control" type="text" placeholder="Amount" id="amount" name="amount" />
+          </div>
+          <div class="form-group">
+            <label for="exchange" class="form-label mt-4">Select exchange</label>
+            <select class="form-control" id="exchange" name="exchange">
+              @foreach (var option in Model.ExchangeOptions)
+              {
+                <option value="@option.Id">
+                  @option.Symbol
+                </option>
+              }
+            </select>
+          </div>
+          <br />
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="active" name="active" checked="" />
+            <label class="form-check-label" for="active">Active</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="submit" asp-page-handler="SavePortfolio">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- This is the popup to confirm delete -->
+<div class="modal hide" tabindex="-1" user="dialog" id="confirm-delete-dlg">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Confirm Delete</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="ClosePopup()">
+          <span aria-hidden="true" data-nsfw-filter-status="swf"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you going to delete this?</p>
+      </div>
+      <div class="modal-footer">
+        <form id="delete-form" asp-page-handler="DeletePortfolio" method="post">
+          <input type="hidden" id="delete-id" name="delete-id" value="-1" />
+          <button class="btn btn-primary" onclick="ConfirmDelete()">
+            Yes
+          </button>
+        </form>
+        <button class="btn btn-primary" onclick="ClosePopup()">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function Add() {
+    document.querySelector("#edit-dlg").classList.remove("hide");
+    document.querySelector("#edit-dlg h3.modal-title").innerHTML = "Add Portfolio";
+    document.querySelector("#edit-form #portfolio-id").value = "-1";
+    document.querySelector("#edit-form #cryptocoin").selectedIndex = 0;
+    document.querySelector("#edit-form #amount").value = 0;
+    document.querySelector("#edit-form #exchange").selectedIndex = 0;
+    document.querySelector("#edit-form #active").checked = true;
+  }
+
+  function Edit(id, cryptocoinId, amount, exchangeId, active) {
+    document.querySelector("#edit-dlg").classList.remove("hide");
+    document.querySelector("#edit-dlg h3.modal-title").innerHTML = "Add Portfolio";
+    document.querySelector("#edit-form #portfolio-id").value = id;
+    document.querySelector("#edit-form #cryptocoin").selectedIndex = cryptocoinId - 1;
+    document.querySelector("#edit-form #amount").value = amount;
+    document.querySelector("#edit-form #exchange").selectedIndex = exchangeId - 1;
+    document.querySelector("#edit-form #active").checked = active;
+  }
+
+  function Delete(id) {
+    document.querySelector("#confirm-delete-dlg").classList.remove("hide");
+    document.querySelector("#delete-form #delete-id").value = id;
+  }
+
+  function ClosePopup() {
+    document.querySelector("#edit-dlg").classList.add("hide");
+    document.querySelector("#confirm-delete-dlg").classList.add("hide");
+  }
+</script>
+
+<style>
+  .modal {
+    display: block;
+  }
+
+  .modal.hide {
+    display: none;
+  }
+
+  .alert.hide {
+    display: none;
+  }
+</style>

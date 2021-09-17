@@ -1,0 +1,372 @@
+﻿@page "/portfolio"
+@using System.Globalization
+
+<div class="bs-component">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <p>5626 BTC<br /> USD 56236.2</p>
+            <p>566 ETH<br /> USD 5636.2</p>
+            <div class="alert alert-dismissible alert-secondary">
+                <strong>Well done!</strong> You successfully read <a href="#" class="alert-link">this important alert
+                    message</a>.
+            </div>
+            <div class="card border-success mb-3" style="max-width: 20rem;">
+                <div class="card-body">
+                    <p class="card-text"> ₿0.14 2.54ETH $5.797.42</p>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+<p></p>
+<h1>Aggregate Account Balance</h1>
+
+<div class="row">
+    <div class="col-md-2 col-sm-12 p-4">
+        <RadzenChart Style="width: 200px; height: 200px">
+            <RadzenPieSeries Data="@revenue" Title="Revenue" CategoryProperty="Symbol" ValueProperty="Revenue" />
+            <RadzenLegend Visible="false" />
+        </RadzenChart>
+    </div>
+    <div class="col-md-7 col-sm-12 p-4">
+        <RadzenChart Style="height: 200px">
+            <RadzenLineSeries Smooth="@smooth" Data="@revenue2019" CategoryProperty="Date" Title="2021"
+                LineType="LineType.Dashed" ValueProperty="Revenue">
+                <RadzenMarkers MarkerType="MarkerType.Square" />
+            </RadzenLineSeries>
+            <RadzenLineSeries Smooth="@smooth" Data="@revenue2020" CategoryProperty="Date" Title="2020"
+                ValueProperty="Revenue">
+                <RadzenMarkers MarkerType="MarkerType.Circle" />
+            </RadzenLineSeries>
+            <RadzenCategoryAxis Padding="20" FormatString="{0:MMM}" />
+            <RadzenValueAxis Formatter="@FormatAsUSD">
+                <RadzenGridLines Visible="true" />
+            </RadzenValueAxis>
+            <RadzenLegend Visible="false" />
+        </RadzenChart>
+    </div>
+    <div class="col-md-3 col-sm-12 p-4">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">Total Portfolio</th>
+                    <th scope="col" class="text-center">24h CHange</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row" class="text-center">0.12456</th>
+                    <td class="text-center">23.5689</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-center">0.00025</th>
+                    <td class="text-center">+56</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <form class="d-flex">
+            <input class="form-control" type="text" size="10" placeholder="Search">
+        </form>
+    </div>
+    <div class="col-md-7">
+
+    </div>
+    <div class="col-md-2 d-flex flex-row-reverse">
+        <div class="bs-component mb-3 pull-right">
+            <div class="btn-group pull-right" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked="">
+                <label class="btn btn-outline-primary" for="btnradio1">BTC</label>
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked="">
+                <label class="btn btn-outline-primary" for="btnradio2">USD</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bs-component">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Token</th>
+                <th scope="col">Share</th>
+                <th scope="col">Change (24h)</th>
+                <th scope="col">Price</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Ethereum (ETH)</th>
+                <td>48.69%</td>
+                <td>0.7%</td>
+                <td>$2279.1669</td>
+                <td>1.235689</td>
+                <td>$223279.1669</td>
+            </tr>
+            <tr>
+                <th scope="row">Bitcoin (BTC)</th>
+                <td>4.69%</td>
+                <td>0.4%</td>
+                <td>$39568.1669</td>
+                <td>6.235145</td>
+                <td>$54565279.1669</td>
+            </tr>
+            <tr>
+                <th scope="row">Binance Coin (BNB)</th>
+                <td>48.69%</td>
+                <td>0.7%</td>
+                <td>$2279.1669</td>
+                <td>1.235689</td>
+                <td>$2899.1669</td>
+            </tr>
+            <tr>
+                <th scope="row">Tether (USDT)</th>
+                <td>8.69%</td>
+                <td>0.05%</td>
+                <td>$23.169</td>
+                <td>2356.569</td>
+                <td>$65979.1669</td>
+            </tr>
+            <tr>
+                <th scope="row">Ethereum (ETH)</th>
+                <td>48.69%</td>
+                <td>0.7%</td>
+                <td>$2279.1669</td>
+                <td>1.235689</td>
+                <td>$5279.1669</td>
+            </tr>
+            <tr>
+                <th scope="row">Bitcoin (BTC)</th>
+                <td>4.69%</td>
+                <td>0.4%</td>
+                <td>$39568.1669</td>
+                <td>6.235145</td>
+                <td>$54565279.1669</td>
+            </tr>
+            <tr>
+                <th scope="row">Binance Coin (BNB)</th>
+                <td>48.69%</td>
+                <td>0.7%</td>
+                <td>$2279.1669</td>
+                <td>1.235689</td>
+                <td>$2899.1669</td>
+            </tr>
+            <tr>
+                <th scope="row">Tether (USDT)</th>
+                <td>8.69%</td>
+                <td>0.05%</td>
+                <td>$23.169</td>
+                <td>2356.569</td>
+                <td>$65979.1669</td>
+            </tr>
+            <tr>
+                <th scope="row">Ethereum (ETH)</th>
+                <td>48.69%</td>
+                <td>0.7%</td>
+                <td>$2279.1669</td>
+                <td>1.235689</td>
+                <td>$5279.1669</td>
+            </tr>
+            <tr>
+                <th scope="row">Bitcoin (BTC)</th>
+                <td>4.69%</td>
+                <td>0.4%</td>
+                <td>$39568.1669</td>
+                <td>6.235145</td>
+                <td>$54565279.1669</td>
+            </tr>
+            <tr>
+                <th scope="row">Binance Coin (BNB)</th>
+                <td>48.69%</td>
+                <td>0.7%</td>
+                <td>$2279.1669</td>
+                <td>1.235689</td>
+                <td>$2899.1669</td>
+            </tr>
+            <tr>
+                <th scope="row">Tether (USDT)</th>
+                <td>8.69%</td>
+                <td>0.05%</td>
+                <td>$23.169</td>
+                <td>2356.569</td>
+                <td>$65979.1669</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+@code {
+    class DataItem2
+    {
+        public string Symbol { get; set; }
+        public double Revenue { get; set; }
+    }
+
+    DataItem2[] revenue = new DataItem2[] {
+new DataItem2
+{
+Symbol = "BTC",
+Revenue = 30000
+},
+new DataItem2
+{
+Symbol = "ETH",
+Revenue = 40000
+},
+new DataItem2
+{
+Symbol = "LTC",
+Revenue = 50000
+},
+new DataItem2
+{
+Symbol = "USDT",
+Revenue = 80000
+},
+};
+
+    bool smooth = false;
+    class DataItem
+    {
+        public DateTime Date { get; set; }
+        public double Revenue { get; set; }
+    }
+
+    string FormatAsUSD(object value)
+    {
+        return ((double)value).ToString("C0", CultureInfo.CreateSpecificCulture("en-US"));
+    }
+
+    DataItem[] revenue2019 = new DataItem[] {
+new DataItem
+{
+Date = DateTime.Parse("2019-01-01"),
+Revenue = 234000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-02-01"),
+Revenue = 269000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-03-01"),
+Revenue = 233000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-04-01"),
+Revenue = 244000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-05-01"),
+Revenue = 214000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-06-01"),
+Revenue = 253000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-07-01"),
+Revenue = 274000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-08-01"),
+Revenue = 284000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-09-01"),
+Revenue = 273000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-10-01"),
+Revenue = 282000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-11-01"),
+Revenue = 289000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-12-01"),
+Revenue = 294000
+}
+};
+
+    DataItem[] revenue2020 = new DataItem[] {
+new DataItem
+{
+Date = DateTime.Parse("2019-01-01"),
+Revenue = 334000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-02-01"),
+Revenue = 369000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-03-01"),
+Revenue = 333000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-04-01"),
+Revenue = 344000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-05-01"),
+Revenue = 314000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-06-01"),
+Revenue = 353000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-07-01"),
+Revenue = 374000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-08-01"),
+Revenue = 384000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-09-01"),
+Revenue = 373000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-10-01"),
+Revenue = 382000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-11-01"),
+Revenue = 389000
+},
+new DataItem
+{
+Date = DateTime.Parse("2019-12-01"),
+Revenue = 394000
+}
+};
+}

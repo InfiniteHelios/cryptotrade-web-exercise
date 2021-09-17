@@ -1,0 +1,242 @@
+@using Microsoft.AspNetCore.Identity;
+@inject RoleManager<IdentityRole> roleManager
+
+@if (Actived)
+{
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @{
+        int i = 0;
+      }
+      @foreach (var item in roles)
+      {
+        <tr>
+          <td>@{
+              ++i;
+            }@i</td>
+          <td>@item.Name</td>
+          <td>
+            <button class="btn btn-primary" @onclick="(() => Edit(item))">
+              Edit
+            </button>
+            <button class="btn btn-danger" @onclick="(() => Delete(item))">
+              Delete
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  <button class="btn btn-success" @onclick="Add">Add</button>
+}
+
+@if (showPopup)
+{
+  <!-- This is the popup to create or edit -->
+  <div class="modal" tabindex="-1" style="display:block" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">
+            @(mode == 2 ? "Edit" : "Add") Role
+          </h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="ClosePopup">
+            <span aria-hidden="true" data-nsfw-filter-status="swf"></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="name" class="form-label mt-4">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Role Name" @bind="obj.Name">
+          </div>
+          <br />
+          <span style="color:red">@strError</span>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" @onclick="Save">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+@if (showConfirm)
+{
+  <!-- This is the popup to confirm delete -->
+  <div class="modal" tabindex="-1" style="display:block" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Confirm Delete</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="ClosePopup">
+            <span aria-hidden="true" data-nsfw-filter-status="swf"></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you going to delete this?</p>
+          <br />
+          <span style="color:red">@strError</span>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" @onclick="ConfirmDelete">
+            Yes
+          </button>
+          <button class="btn btn-primary" @onclick="ClosePopup">
+            No
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+@code {
+  [Parameter]
+  public bool Actived { get; set; } = false;
+
+  string strError = "";
+  bool showPopup = false;
+  bool showConfirm = false;
+  int mode = 0;
+  List<IdentityRole> roles = new List<IdentityRole>();
+  IdentityRole obj = new IdentityRole();
+
+  protected override void OnInitialized()
+  {
+    GetRoles();
+  }
+
+  void GetRoles()
+  {
+    roles = roleManager.Roles.ToList();
+  }
+
+  void Add()
+  {
+    obj = new IdentityRole();
+    mode = 1;
+    showPopup = true;
+    showConfirm = false;
+  }
+
+  void Edit(IdentityRole item)
+  {
+    obj = item;
+    mode = 2;
+    showPopup = true;
+    showConfirm = false;
+  }
+
+  async Task Save()
+  {
+    try
+    {
+      if (obj.Name == string.Empty) return;
+
+      if (mode == 2)
+      {
+        var ret = await roleManager.UpdateAsync(obj);
+        if (!ret.Succeeded)
+        {
+          if (ret
+          .Errors
+          .FirstOrDefault() != null)
+          {
+            strError =
+            ret
+            .Errors
+            .FirstOrDefault()
+            .Description;
+          }
+          else
+          {
+            strError = "Update error";
+          }
+          return;
+        }
+      }
+      else
+      {
+        if (await roleManager.RoleExistsAsync(obj.Name))
+        {
+          strError = "Such role type exists.";
+          return;
+        }
+        var ret = await roleManager.CreateAsync(new IdentityRole { Name = obj.Name });
+        if (!ret.Succeeded)
+        {
+          if (ret
+          .Errors
+          .FirstOrDefault() != null)
+          {
+            strError =
+            ret
+            .Errors
+            .FirstOrDefault()
+            .Description;
+          }
+          else
+          {
+            strError = "Add error";
+          }
+          return;
+        }
+      }
+      ClosePopup();
+      GetRoles();
+    }
+    catch (Exception ex)
+    {
+      strError = ex.GetBaseException().Message;
+    }
+  }
+
+  void Delete(IdentityRole item)
+  {
+    obj = item;
+    showPopup = false;
+    showConfirm = true;
+  }
+
+  async Task ConfirmDelete()
+  {
+    var ret = await roleManager.DeleteAsync(obj);
+    if (!ret.Succeeded)
+    {
+      if (ret
+      .Errors
+      .FirstOrDefault() != null)
+      {
+        strError =
+        ret
+        .Errors
+        .FirstOrDefault()
+        .Description;
+      }
+      else
+      {
+        strError = "Delete error";
+      }
+      return;
+    }
+    ClosePopup();
+    GetRoles();
+  }
+
+  void ClosePopup()
+  {
+    strError = "";
+    mode = 0;
+    showPopup = false;
+    showConfirm = false;
+  }
+}

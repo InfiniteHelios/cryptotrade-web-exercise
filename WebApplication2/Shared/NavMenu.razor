@@ -1,0 +1,73 @@
+﻿<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">Tick Quant</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="signup">
+                <span class="oi oi-account-login" aria-hidden="true"></span> Sign up
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="settings">
+                <span class="oi oi-cog" aria-hidden="true"></span> Settings
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="terminal">
+                <span class="oi oi-terminal" aria-hidden="true"></span> Trade Terminal
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="signals">
+                <span class="oi oi-signal" aria-hidden="true"></span> Trading Signals
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="portfolio">
+                <span class="oi oi-pulse" aria-hidden="true"></span> Portfolio Analysis
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="help">
+                <span class="oi oi-question-mark" aria-hidden="true"></span> Help
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="administration">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Administration
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <LoginDisplay />
+        </li>
+        <li class="nav-item px-3">
+            <select class="form-select" id="exampleSelect1">
+                <option>English</option>
+                <option>Spanish</option>
+                <option>French</option>
+            </select>
+        </li>
+    </ul>
+
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
