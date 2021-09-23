@@ -57,7 +57,12 @@
             <input type="text" class="form-control" id="name" placeholder="Role Name" @bind="obj.Name">
           </div>
           <br />
-          <span style="color:red">@strError</span>
+          @if (strError.Length > 0)
+          {
+            <div class="alert alert-dismissible alert-danger">
+              <p class="mb-0" data-nsfw-filter-status="swf">@strError</p>
+            </div>
+          }
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary" @onclick="Save">
@@ -130,7 +135,10 @@
 
   void Edit(IdentityRole item)
   {
-    obj = item;
+    obj.Id = item.Id;
+    obj.Name = item.Name;
+    obj.NormalizedName = item.NormalizedName;
+    obj.ConcurrencyStamp = item.ConcurrencyStamp;
     mode = 2;
     showPopup = true;
     showConfirm = false;

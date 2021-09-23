@@ -9,6 +9,9 @@ using Microsoft.Extensions.Hosting;
 using WebApplication2.Areas.Identity;
 using WebApplication2.Data;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
+using System.IO;
+using Microsoft.Extensions.FileProviders;
 
 namespace WebApplication2
 {
@@ -34,7 +37,7 @@ namespace WebApplication2
       services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
           .AddRoles<IdentityRole>()
           .AddEntityFrameworkStores<ApplicationDbContext>();
-      services.AddRazorPages();
+      services.AddRazorPages().AddRazorRuntimeCompilation();
       services.AddServerSideBlazor();
 
       services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
@@ -51,6 +54,7 @@ namespace WebApplication2
       {
         app.UseDeveloperExceptionPage();
         app.UseDatabaseErrorPage();
+        app.UseBrowserLink();
       }
       else
       {

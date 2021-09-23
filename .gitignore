@@ -1,5 +1,7 @@
 .vscode
+.vs
 .config
 */bin
 */Migrations
 */obj
+*.user

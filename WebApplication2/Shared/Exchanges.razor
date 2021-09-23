@@ -89,7 +89,12 @@
             <label class="form-check-label" for="active">Active</label>
           </div>
           <br />
-          <span style="color:red">@strError</span>
+          @if (strError.Length > 0)
+          {
+            <div class="alert alert-dismissible alert-danger">
+              <p class="mb-0" data-nsfw-filter-status="swf">@strError</p>
+            </div>
+          }
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary" @onclick="Save">
@@ -165,7 +170,12 @@
 
   void Edit(Exchange item)
   {
-    obj = item;
+    obj.Id = item.Id;
+    obj.Symbol = item.Symbol;
+    obj.Name = item.Name;
+    obj.CreatedAt = item.CreatedAt;
+    obj.UpdatedAt = item.UpdatedAt;
+    obj.Active = item.Active;
     mode = 2;
     active = obj.Active;
     showPopup = true;
@@ -174,6 +184,16 @@
 
   async Task Save()
   {
+    if (obj.Symbol == null || obj.Name == null)
+    {
+      strError = "Please input correct value.";
+      return;
+    }
+    if (obj.Symbol.Length == 0 || obj.Name.Length == 0)
+    {
+      strError = "Please input correct value.";
+      return;
+    }
     try
     {
       obj.Active = active;

@@ -53,6 +53,12 @@ namespace WebApplication2.Areas.Identity.Pages.Account.Manage
 
     public async Task<IActionResult> OnPostSavePortfolioAsync()
     {
+      if (Request.Form["cryptocoin"].ToString().Length == 0 || Request.Form["exchange"].ToString().Length == 0)
+      {
+        StatusMessage = "Please input correct value.";
+        return RedirectToPage();
+      }
+
       var user = await _userManager.GetUserAsync(User);
       if (user == null)
       {

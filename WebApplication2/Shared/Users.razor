@@ -87,7 +87,12 @@
             </select>
           </div>
           <br />
-          <span style="color:red">@strError</span>
+          @if (strError.Length > 0)
+          {
+            <div class="alert alert-dismissible alert-danger">
+              <p class="mb-0" data-nsfw-filter-status="swf">@strError</p>
+            </div>
+          }
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary" @onclick="Save">
@@ -177,7 +182,10 @@
   void Edit(ApplicationUser item)
   {
     roles = roleManager.Roles.ToList();
-    obj = item;
+    obj.Id = item.Id;
+    obj.Email = item.Email;
+    obj.Name = item.Name;
+    obj.UserName = item.UserName;
     mode = 2;
     showPopup = true;
     showConfirm = false;
